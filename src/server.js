@@ -14,8 +14,8 @@ const onRequest = (request, response) => {
         htmlHandler.getIndex(request, response);
       } else if (parsedUrl.pathname === '/style.css') {
         htmlHandler.getCSS(request, response);
-      } else if (parsedUrl.pathname === '/getUsers') {
-        responseHandler.getUsers(request, response);
+      } else if (parsedUrl.pathname === '/getItems') {
+        responseHandler.getItems(request, response);
       } else if (parsedUrl.pathname === '/notReal') {
         responseHandler.notReal(request, response);
       } else {
@@ -23,14 +23,14 @@ const onRequest = (request, response) => {
       }
       break;
     case 'HEAD':
-      if (parsedUrl.pathname === '/getUsers') {
-        responseHandler.getUsersMeta(request, response);
+      if (parsedUrl.pathname === '/getItems') {
+        responseHandler.getItemsMeta(request, response);
       } else {
         responseHandler.notRealMeta(request, response);
       }
       break;
     case 'POST':
-      if (parsedUrl.pathname === '/addUser') {
+      if (parsedUrl.pathname === '/addItem') {
         const res = response;
         const body = [];
 
@@ -48,7 +48,7 @@ const onRequest = (request, response) => {
           const bodyString = Buffer.concat(body).toString();
           const bodyParams = query.parse(bodyString);
 
-          responseHandler.addUser(request, res, bodyParams);
+          responseHandler.addItem(request, res, bodyParams);
         });
       }
 

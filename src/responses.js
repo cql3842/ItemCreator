@@ -1,4 +1,4 @@
-const users = {};
+const items = {};
 
 const respondJSON = (request, response, status, object) => {
   const headers = {
@@ -18,37 +18,41 @@ const respondJSONMeta = (request, response, status) => {
   response.end();
 };
 
-const getUsers = (request, response) => {
+const getItems = (request, response) => {
   const responseJSON = {
-    users,
+    items,
   };
 
   return respondJSON(request, response, 200, responseJSON);
 };
-const getUsersMeta = (request, response) => respondJSONMeta(request, response, 200);
-const addUser = (request, response, body) => {
+
+const getItemsMeta = (request, response) => respondJSONMeta(request, response, 200);
+
+const addItem = (request, response, body) => {
   const responseJSON = {
-    message: 'Name and age are both required.',
+    message: 'Please fill in all fields.',
   };
 
-  if (!body.name || !body.age) {
+  if (!body.name || !body.description) {
     responseJSON.id = 'missingParams';
     return respondJSON(request, response, 400, responseJSON);
   }
 
   let responseCode = 201;
 
-  if (users[body.name]) {
+  if (items[body.name]) {
     responseCode = 204;
   } else {
-    users[body.name] = {};
+    items[body.name] = {};
   }
 
-  users[body.name].name = body.name;
-  users[body.name].age = body.age;
+  items[body.name].name = body.name;
+  items[body.name].type = body.type;
+  items[body.name].description = body.description;
+  items[body.name].rarity = body.rarity;
 
   if (responseCode === 201) {
-    responseJSON.message = 'Created Successfully';
+    responseJSON.message = 'Item Created Successfully';
     return respondJSON(request, response, responseCode, responseJSON);
   }
   return respondJSONMeta(request, response, responseCode);
@@ -67,9 +71,9 @@ const notRealMeta = (request, response) => {
 };
 
 module.exports = {
-  getUsers,
-  getUsersMeta,
+  getItems,
+  getItemsMeta,
   notReal,
   notRealMeta,
-  addUser,
+  addItem,
 };
