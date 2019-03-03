@@ -1,25 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>ItemCreator</title>
+  <title>MagicalItemCreator</title>
+  <link href="https://fonts.googleapis.com/css?family=Srisakdi" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="/style.css">
-  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
   <script type="text/babel">
     const parseJSON = (xhr, content) => {
       const obj = JSON.parse(xhr.response);
-      console.dir(obj);
-      /*if(obj.message) {
-        const p = document.createElement('p');
-        p.textContent = `Message: ${obj.message}`;
-        content.appendChild(p);
-      }*/
+	  const itemContent = document.querySelector('#filledContent');
+	  //console.dir(obj);
       if(obj.items) {
-		const p = document.createElement('p');
-        const itemList = document.createElement('p');
-        const items = JSON.stringify(obj.items);
-        p.textContent = items;
-        content.appendChild(p);
+	    console.dir(obj);
+		itemContent.innerHTML = "";
+		content.innerHTML="";
+		let itemList = [];
+		for(let i=0;i<Object.getOwnPropertyNames(obj.items).length; i++)
+		{
+		  itemList.push(Object.getOwnPropertyNames(obj.items)[i]);
+		  const span = document.createElement('span');
+		  let key = itemList[i];
+		  
+		  const name = document.createElement('h5');
+		  name.innerHTML = obj.items[key].name;
+		  span.appendChild(name);
+		  const type = document.createElement('p');
+		  type.innerHTML = obj.items[key].type;
+		  span.appendChild(type);
+		  const rare = document.createElement('p');
+		  rare.innerHTML = obj.items[key].rarity;
+		  span.appendChild(rare);
+		  const desc = document.createElement('p');
+		  desc.innerHTML = obj.items[key].description;
+		  span.appendChild(desc);
+		  
+		  itemContent.appendChild(span);
+		}
       }
     };
     const handleResponse = (xhr,parseResponse) => {
@@ -29,7 +45,7 @@
           content.innerHTML = `<b>Success</b>`;
           break;
         case 201: //created
-          content.innerHTML = '<b>Item created</b>';
+          content.innerHTML = '<b>Successfully Created an Item</b>';
           break;
         case 204: //updated (no response back from server)
           content.innerHTML = '<b>Updated the item</b>';
@@ -51,7 +67,6 @@
     const requestUpdate = (e, userForm) => {
       const url = '/getItems';
       const method = 'GET';
-      
       const xhr = new XMLHttpRequest();
       xhr.open(method, url);
       xhr.setRequestHeader('Accept', 'application/json');
@@ -64,6 +79,8 @@
       xhr.send();
       
       e.preventDefault();
+	  
+	  
       return false;
     };
 
@@ -108,45 +125,43 @@
 </head>
 <body>
   <section id="top">
-    <h3>Item Creator</h3>
+    <h1>Magical Item Creator</h1>
     <form id="nameForm" action="/addItem" method="post">
       <label for="name">Name: </label>
       <input id="nameField" type="text" name="name" />
       <select id="typeSelect">
-        <option value="item">Item</option>
-        <option value="armor">Armor</option>
-		<option value="consumable">Consumable</option>
-		<option value="amulet">Amulet</option>
-		<option value="boots">Boots</option>
-		<option value="cloak">Cloak</option>
-		<option value="ring">Ring</option>
-		<option value="shield">Shield</option>
-		<option value="helmet">Helmet</option>
-		<option value="potion">Potion</option>
-		<option value="ammunition">Ammunition</option>
-		<option value="book">Book</option>
-		<option value="other">Other</option>
+        <option value="Weapon">Weapon</option>
+        <option value="Armor">Armor</option>
+		<option value="Consumable">Consumable</option>
+		<option value="Amulet">Amulet</option>
+		<option value="Boots">Boots</option>
+		<option value="Cloak">Cloak</option>
+		<option value="Ring">Ring</option>
+		<option value="Shield">Shield</option>
+		<option value="Helmet">Helmet</option>
+		<option value="Potion">Potion</option>
+		<option value="Ammunition">Ammunition</option>
+		<option value="Book">Book</option>
+		<option value="Other">Other</option>
       </select>
 	  <label for="description">Description: </label>
       <input id="descField" type="text" name="description" />
 	  <select id="raritySelect">
-        <option value="common">Common</option>
-        <option value="uncommon">Uncommon</option>
-		<option value="rare">Rare</option>
-		<option value="very rare">Very rare</option>
-		<option value="legendary">Legendary</option>
+        <option value="Common">Common</option>
+        <option value="Uncommon">Uncommon</option>
+		<option value="Rare">Rare</option>
+		<option value="Very rare">Very rare</option>
+		<option value="Legendary">Legendary</option>
       </select>
       <input type="submit" value="Add Item" />
     </form>
 	<form id="getItem" action="/getItems" method="get">
-      <!-- <select id='urlField'>
-        <option value='getRItem'>Get Random Item</option>
-        <option value='getAItem'>Get All Items</option>
-      </select> -->
-      <input type="submit" value="Get Items" />
+      <input type="submit" value="Get all Items" />
     </form>
   </section>
   <section id="content">
+  </section>
+  <section id="filledContent">
   </section>
 </body>
 </html>

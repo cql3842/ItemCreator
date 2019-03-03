@@ -3,6 +3,12 @@ html, body {
   width: 100%;
   margin: 0;
   padding: 0;
+  background-color:#22252c;
+  font-family: 'Srisakdi', cursive;
+  color:white;
+}
+form{
+	margin-bottom:13px;
 }
 
 #top {
@@ -11,11 +17,53 @@ html, body {
 }
 
 #top h1 {
-  font-size: 2em;
+  font-size: 2.5em;
+  border-bottom-style:solid;
+  border-color:#9932CC;
 }
 
 #content {
   margin-top: 100px;
-  font-size: 2em;
+  font-size: 1em;
   text-align: center;
+}
+
+form {
+  font-size:1.3em;
+}
+select{
+  background-color:#9932CC;
+  font-family: 'Srisakdi', cursive;
+  color:white;
+  border-radius:1em;
+}
+input[type=text] {
+  background-color:#9932CC;
+  font-family: 'Srisakdi', cursive;
+  color:white;
+  border-radius:2px;
+}
+
+input[type=submit]{
+  background-color:#e14658;
+  color:black;
+  border-radius:1em;
+}
+span {
+  display:inline-block;
+  max-width:30%;
+  min-width:10%;
+  background-color:#4f4036;
+  border-style:solid;
+  padding-left:5px;
+  padding-right:5px;
+  margin-right:5px;
+  margin-left:5px;
+  max-height:30%;
+  min-height:15%;
+  border-radius:3px;
+  border-color:#9932CC;
+}
+h5 {
+  text-align:center;
 }

@@ -49,7 +49,7 @@ const addItem = (request, response, body) => {
   items[body.name].name = body.name;
   items[body.name].type = body.type;
   items[body.name].description = body.description;
-  items[body.name].rarity = body.rarity;
+  items[body.name].rarity = body.raritySelect;
 
   if (responseCode === 201) {
     responseJSON.message = 'Item Created Successfully';
